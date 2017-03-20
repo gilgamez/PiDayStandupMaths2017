@@ -76,7 +76,7 @@ func getArg(index int, defaultValue int) int {
 
 func main() {
   samples := getArg(1, 10000000)
-  upper := int(getArg(1, math.MaxInt64))
+  upper := int(getArg(2, math.MaxInt64))
   a := generateRandomNumbers(upper)
   b := generateRandomNumbers(upper)
 
