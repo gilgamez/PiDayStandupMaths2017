@@ -15,7 +15,7 @@ func generateRandomNumbers(max int) (chan int) {
   r := rand.New(rand.NewSource(time.Now().UnixNano()))
   go func() {
     for {
-      value := r.Intn(max)
+      value := 1 + r.Intn(max)
       c <- value
     }
   }()
