@@ -48,15 +48,11 @@ func (ps *PiStimate) Add(other PiStimate) {
   ps.coprime += other.coprime
 }
 
-func (ps *PiStimate) Log(log *log.Logger) {
-  log.WithField("pi", ps.Pi()).WithField("total", ps.Total()).Info()
-}
-
 var coprime = PiStimate{coprime: 1, total: 1 }
 var cofactor = PiStimate{coprime: 0, total: 1 }
 
 func decide(a int, b int) *PiStimate {
-  if gcd.Iter(a,b) == 1 {
+  if gcd.Iter(a, b) == 1 {
     return &coprime
   } else {
     return &cofactor
@@ -75,7 +71,7 @@ func getArg(index int, defaultValue int) int {
 }
 
 func main() {
-  samples := getArg(1, 10000000)
+  samples := getArg(1, 100000)
   upper := int(getArg(2, math.MaxInt64))
   a := generateRandomNumbers(upper)
   b := generateRandomNumbers(upper)
@@ -90,12 +86,11 @@ func main() {
   }()
 
   result := PiStimate{coprime: 0, total: 0}
-  logger := log.New()
-  result.Log(logger)
+  log.WithFields(log.Fields{"samples": samples, "upper": upper}).Info("parameters")
 
   for v := range pi {
     result.Add(*v)
   }
 
-  result.Log(logger)
+  log.WithFields(log.Fields{"pi": result.Pi(), "total": result.Total()}).Info("result")
 }
